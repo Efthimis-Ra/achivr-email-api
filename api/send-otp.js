@@ -20,10 +20,12 @@ export default async function handler(req, res) {
 
   const otp = String(Math.floor(100000 + Math.random() * 900000));
 
+  // EmailJS data with PRIVATE KEY (not public key)
   const emailData = {
     service_id: 'service_1zmrk3q',
     template_id: 'template_a9zcjmr',
     user_id: 'b0JEissnJxbRPfhUD',
+    accessToken: 'tdJPxd87zXriYbd5bvM99',  // PRIVATE KEY for server-side
     template_params: {
       otp_code: otp,
       email: email
@@ -43,7 +45,7 @@ export default async function handler(req, res) {
       return res.status(200).json({ success: true, otp: otp });
     }
 
-    return res.status(500).json({ success: false, error: 'Failed to send', details: text });
+    return res.status(500).json({ success: false, error: 'Failed', details: text, status: response.status });
   } catch (err) {
     return res.status(500).json({ success: false, error: String(err) });
   }
